@@ -402,7 +402,20 @@ document.addEventListener('DOMContentLoaded', () => {
       { attribution: '© OpenStreetMap contributors', maxZoom: 19 }
     );
 
-    map = L.map('map', { center: alexandriaCoords, zoom: 12, layers: [satelliteLayer], zoomControl: true });
+    const alexandriaBounds = [
+      [30.80, 29.50], // الجنوب الغربي (برج العرب)
+      [31.40, 30.20]  // الشمال الشرقي (أبو قير والبحر)
+    ];
+
+    map = L.map('map', { 
+      center: alexandriaCoords, 
+      zoom: 12, 
+      minZoom: 10,
+      maxBounds: alexandriaBounds,
+      maxBoundsViscosity: 1.0,
+      layers: [satelliteLayer], 
+      zoomControl: true 
+    });
     // إصلاح تأخر تحميل الخريطة على الموبايل
     setTimeout(() => map.invalidateSize(), 300);
     const layerControl = L.control.layers({ 'القمر الصناعي (ESRI)': satelliteLayer, 'شبكة الطرق (OSM)': osmRoadsLayer }).addTo(map);
